@@ -1,0 +1,11 @@
+LICENSE — Projet académique
+
+Ce projet a été réalisé à des fins pédagogiques dans le cadre du cours
+« Introduction à la programmation Web Server » au Collège La Cité (Ottawa, Canada).
+
+Auteur : Adolph Nkula
+Année : 2025
+
+Le code source de ce projet est destiné uniquement à l'apprentissage et à l'évaluation.
+Toute reproduction, redistribution ou utilisation à des fins commerciales est interdite
+sans autorisation écrite de l'auteur.
