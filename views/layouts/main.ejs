@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <%- include('partials/head') %>
+  </head>
+  <body>
+    <!-- Lien "aller au contenu" pour accessibilité -->
+    <a class="skip-link" href="#main-content">Aller au contenu</a>
+
+    <%- include('partials/header') %>
+
+    <!-- Messages flash (optionnel) -->
+    <% if (typeof flash !== 'undefined' && flash && flash.length) { %>
+      <section class="flash-wrap" role="status" aria-live="polite">
+        <% flash.forEach(msg => { %>
+          <div class="flash <%= msg.type || 'info' %>"><%= msg.text %></div>
+        <% }) %>
+      </section>
+    <% } %>
+
+    <main id="main-content" class="container" role="main">
+      <%- body %>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <!-- Emplacement pour des scripts spécifiques à la page -->
+    <% if (typeof pageScripts !== 'undefined' && pageScripts.length) { %>
+      <% pageScripts.forEach(src => { %>
+        <script defer src="<%= src %>"></script>
+      <% }) %>
+    <% } %>
+  </body>
+</html>

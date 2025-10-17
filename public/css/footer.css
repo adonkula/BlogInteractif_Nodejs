@@ -1,0 +1,33 @@
+/* ============================
+   Footer – styles dédiés
+   ============================ */
+
+.site-footer {
+  background: #0f172a;      /* bleu nuit */
+  color: #e5e7eb;           /* gris clair */
+  padding: 24px 16px;
+  border-top: 1px solid #1f2937;
+}
+
+.footer-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 6px;
+}
+
+.footer-line {
+  display: block;
+  font-size: 0.925rem;
+  line-height: 1.5;
+}
+
+.footer-sep {
+  margin: 0 8px;
+  opacity: 0.55;
+}
+
+/* Accessibilité & petits écrans */
+@media (max-width: 520px) {
+  .footer-line { font-size: 0.9rem; }
+}

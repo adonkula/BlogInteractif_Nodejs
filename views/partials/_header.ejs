@@ -1,0 +1,45 @@
+<header class="site-header">
+  <div class="header-wrap">
+    <!-- Logo / Nom du site -->
+    <a class="brand" href="/">📰 Blog Interactif</a>
+
+    <!-- Navigation principale -->
+    <nav class="main-nav">
+      <a href="/" class="<%= pageTitle === 'Accueil' ? 'active' : '' %>">Accueil</a>
+      <a href="/articles" class="<%= pageTitle === 'Articles' ? 'active' : '' %>">Articles</a>
+      <a href="/categories" class="<%= pageTitle === 'Catégories' ? 'active' : '' %>">Catégories</a>
+      <a href="/tags" class="<%= pageTitle === 'Tags' ? 'active' : '' %>">Tags</a>
+      <a href="/contact" class="<%= pageTitle === 'Contact' ? 'active' : '' %>">Contact</a>
+    </nav>
+
+    <!-- Barre de recherche -->
+    <form id="searchForm" class="search-bar" action="/articles" method="get">
+      <input
+        type="text"
+        name="q"
+        placeholder="Rechercher un article..."
+        value="<%= typeof query !== 'undefined' ? query : '' %>"
+        aria-label="Rechercher un article"
+      />
+      <button type="submit" title="Rechercher">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+    <!-- Menu de droite (Admin / Profil) -->
+    <nav class="user-nav">
+      <% if (typeof user !== 'undefined' && user.role === 'admin') { %>
+        <a href="/admin/dashboard" class="btn-admin">
+          <i class="fas fa-cogs"></i> Tableau de bord
+        </a>
+        <a href="/logout" class="btn-logout">
+          <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
+      <% } else { %>
+        <a href="/login" class="btn-login">
+          <i class="fas fa-user"></i> Connexion
+        </a>
+      <% } %>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,20 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-wrap">
+    <small class="footer-line">
+      © <%= new Date().getFullYear() %> — Blog Interactif
+    </small>
+
+    <small class="footer-line">
+      Tous droits réservés •
+      <span class="footer-sep">|</span>
+      Réalisé par
+      <strong><%= typeof authorName !== 'undefined' ? authorName : 'Adolph Nkula' %></strong>
+      <span class="footer-sep">|</span>
+      No. étudiant :
+      <strong><%= typeof studentId !== 'undefined' ? studentId : 'XXXXXXXXX' %></strong>
+      <span class="footer-sep">|</span>
+      Collège :
+      <strong><%= typeof collegeName !== 'undefined' ? collegeName : 'La Cité' %></strong>
+    </small>
+  </div>
+</footer>

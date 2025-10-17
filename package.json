@@ -1,0 +1,36 @@
+{
+  "name": "examenua1",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Projet pour examen UA1 - Blog interactif",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/utils/server.js",
+    "dev": "nodemon src/utils/server.js",
+    "db:init": "node src/utils/db.js --init",
+    "db:check": "node src/utils/checkDb.js",    
+    "test": "echo \"Erreur: Aucun test specifié\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "examenua1"
+  },
+  "keywords": [
+    "ua1"
+  ],
+  "author": "Adolph Nkula, Waren Ursul",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "morgan": "^1.10.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

@@ -1,0 +1,17 @@
+<% layout('layouts/main') %>
+<section class="card">
+  <h1>Articles</h1>
+  <div class="list">
+    <% if (!items.length) { %>
+      <p>Aucun article.</p>
+    <% } %>
+    <% items.forEach(it => { %>
+      <a class="list-item" href="/article/<%= it.id %>">
+        <strong><%= it.title %></strong>
+        <div class="meta">
+          publié <%= new Date(it.created_at).toLocaleString() %> • <%= it.comments_count %> commentaires
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<head>
+  <!-- =============================
+       Meta de base
+  ============================== -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Titre dynamique -->
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' | Blog Interactif' : 'Blog Interactif' %></title>
+
+  <!-- =============================
+       Description & SEO
+  ============================== -->
+  <meta name="description" content="Blog Interactif – un espace pour lire, commenter et partager des articles." />
+  <meta name="author" content="<%= typeof authorName !== 'undefined' ? authorName : 'Adolph Nkula' %>" />
+
+  <!-- =============================
+       Favicon (optionnel)
+  ============================== -->
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/header.css">
+
+  <!-- =============================
+       Feuilles de style globales
+  ============================== -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/footer.css">
+
+  <!-- =============================
+       Polices & Icônes (optionnel)
+  ============================== -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/2f4f3e0c3f.js" crossorigin="anonymous"></script>
+
+  <!-- =============================
+       Scripts globaux (optionnel)
+  ============================== -->
+  <script defer src="/js/main.js"></script>
+</head>

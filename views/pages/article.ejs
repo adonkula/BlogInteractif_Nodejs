@@ -1,0 +1,20 @@
+<% layout('layouts/main') %>
+<article class="card">
+  <h1><%= article.title %></h1>
+  <div class="meta"><%= new Date(article.created_at).toLocaleString() %></div>
+  <div class="content"><%- article.content.replace(/\n/g,'<br>') %></div>
+</article>
+
+<section class="card">
+  <h2>Commentaires</h2>
+  <% if (!comments.length) { %>
+    <p>Aucun commentaire pour l’instant.</p>
+  <% } %>
+  <% comments.forEach(c => { %>
+    <div class="comment">
+      <strong><%= c.author || 'Anonyme' %></strong>
+      <div class="meta"><%= new Date(c.created_at).toLocaleString() %></div>
+      <div><%= c.content %></div>
+    </div>
+  <% }) %>
+</section>
