@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <%- include('partials/head') %>
+    <!-- Inclusion de toutes les meta, styles et polices -->
+    <%- include('../partials/_head') %>
+
+    <!-- Titre dynamique -->
+    <title>
+      <%= pageTitle ? (pageTitle + ' – Blog Interactif') : 'Blog Interactif' %>
+    </title>
   </head>
+
   <body>
-    <!-- Lien "aller au contenu" pour accessibilité -->
-    <a class="skip-link" href="#main-content">Aller au contenu</a>
+    <!-- Lien d’accessibilité pour navigation clavier -->
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
-    <%- include('partials/header') %>
+    <!-- En-tête principal -->
+    <%- include('../partials/_header') %>
 
-    <!-- Messages flash (optionnel) -->
+    <!-- Messages flash (si présents) -->
     <% if (typeof flash !== 'undefined' && flash && flash.length) { %>
       <section class="flash-wrap" role="status" aria-live="polite">
         <% flash.forEach(msg => { %>
-          <div class="flash <%= msg.type || 'info' %>"><%= msg.text %></div>
+          <div class="flash <%= msg.type || 'info' %>">
+            <%= msg.text %>
+          </div>
         <% }) %>
       </section>
     <% } %>
 
+    <!-- Contenu principal -->
     <main id="main-content" class="container" role="main">
       <%- body %>
     </main>
 
-    <%- include('partials/footer') %>
+    <!-- Pied de page -->
+    <%- include('../partials/_footer') %>
 
-    <!-- Emplacement pour des scripts spécifiques à la page -->
+    <!-- Scripts spécifiques à la page -->
     <% if (typeof pageScripts !== 'undefined' && pageScripts.length) { %>
       <% pageScripts.forEach(src => { %>
         <script defer src="<%= src %>"></script>
       <% }) %>
     <% } %>
+
+    <!-- Animation d’entrée fluide -->
+    <script>
+      document.body.classList.add('fade-in');
+    </script>
   </body>
 </html>

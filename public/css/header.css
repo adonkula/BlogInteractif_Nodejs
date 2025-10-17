@@ -1,48 +1,224 @@
-/* ===============================
-   Barre de recherche
-   =============================== */
-.search-bar {
-  display: flex;
-  align-items: center;
-  background: #334155;
-  border-radius: 6px;
-  padding: 4px 8px;
-  margin-left: 1rem;
+/* ============================================================
+   HEADER MODERNE & FUN
+   - Compatible avec _header.ejs (brand, nav, search, user)
+   - S'appuie sur les variables de :root définies dans style.css
+   ============================================================ */
+
+/* --- Barre supérieure (collante) --- */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: saturate(120%) blur(8px);
+  background:
+    linear-gradient(180deg, rgba(12,18,40,.66), rgba(12,18,40,.42)),
+    color-mix(in srgb, var(--bg) 85%, transparent);
+  border-bottom: 1px solid var(--border);
 }
 
-.search-bar input {
+/* --- Conteneur interne --- */
+.site-header .wrap{
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+/* --- Marque / logo --- */
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 12px;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  border: 1px solid transparent;
+}
+.brand-emoji{ font-size: 1.2rem }
+.brand-text{
+  font-family: Figtree, Inter, system-ui, sans-serif;
+  letter-spacing: -.02em;
+}
+.brand:hover{
+  transform: translateY(-1px);
+  background: var(--panel);
+  border-color: var(--border);
+}
+
+/* --- Navigation principale --- */
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav a{
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+  font-weight: 600;
+}
+.nav a:hover{
+  background: var(--panel);
+  border-color: var(--border);
+  transform: translateY(-1px);
+}
+.nav a.active{
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+
+/* --- Barre utilisateur (admin / profil) --- */
+.nav.user{
+  gap: 8px;
+}
+.nav.user .btn{
+  padding: .45rem .8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.nav.user .btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.2);
+}
+.btn.ghost{
+  background: transparent;
+}
+
+/* ============================================================
+   🎨 Barre de recherche – style moderne et "fun"
+   ============================================================ */
+.search{
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(145deg, #1e293b, #334155);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 6px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.search:focus-within{
+  transform: scale(1.03);
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+/* Champ */
+.search input{
   background: transparent;
   border: none;
-  color: #f1f5f9;
+  color: #f8fafc;
   outline: none;
   font-size: 0.95rem;
   width: 180px;
+  padding: 6px;
+  font-family: 'Inter', 'Figtree', sans-serif;
 }
-
-.search-bar input::placeholder {
+.search input::placeholder{
   color: #94a3b8;
+  transition: color 0.3s;
 }
-
-.search-bar button {
-  background: none;
-  border: none;
-  color: #38bdf8;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 4px;
-  transition: color 0.2s;
-}
-
-.search-bar button:hover {
+.search input:focus::placeholder{
   color: #60a5fa;
 }
 
-@media (max-width: 700px) {
-  .search-bar {
-    width: 100%;
-    margin: 8px 0;
+/* Bouton */
+.search button{
+  background: var(--brand, #38bdf8);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+.search button:hover{
+  background: #60a5fa;
+  transform: rotate(8deg) scale(1.05);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
+}
+.search button:active{
+  transform: scale(0.95);
+}
+.search button::before{
+  content: "🔍";
+  display: inline-block;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+.search button:hover::before{
+  transform: scale(1.2);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1020px){
+  .site-header .wrap{
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "brand search user";
   }
-  .search-bar input {
-    width: 100%;
+  .brand{ grid-area: brand }
+  .search{ grid-area: search; justify-self: center }
+  .nav{ display:none } /* on masque la nav principale si l'espace est réduit */
+  .nav.user{ grid-area: user }
+}
+
+@media (max-width: 780px){
+  .site-header .wrap{
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand user"
+      "search search";
+    row-gap: 6px;
   }
+  .brand{ justify-self: flex-start }
+  .search{
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding: 6px 10px;
+  }
+  .search input{
+    width: 100%;
+    font-size: 1rem;
+  }
+  .search button{
+    width: 40px;
+    height: 40px;
+  }
+  .nav.user{ display: none } /* on garde le header compact sur mobile */
+}
+
+/* Petit effet d'entrée */
+.site-header{
+  animation: header-drop .35s ease-out both;
+}
+@keyframes header-drop{
+  from{ transform: translateY(-10px); opacity: 0 }
+  to{ transform: translateY(0); opacity: 1 }
 }

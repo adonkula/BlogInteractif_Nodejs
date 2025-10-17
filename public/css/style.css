@@ -1,0 +1,44 @@
+/* Animation d’apparition */
+body {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+body.fade-in {
+  opacity: 1;
+}
+
+/* Accessibilité : lien "Aller au contenu" */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 10px;
+  background: var(--brand);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+.skip-link:focus {
+  top: 10px;
+}
+
+/* Messages flash */
+.flash-wrap {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  display: grid;
+  gap: 8px;
+  z-index: 9999;
+}
+.flash {
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+.flash.info { background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+.flash.success { background: linear-gradient(90deg, #00b894, #55efc4); }
+.flash.error { background: linear-gradient(90deg, #d63031, #ff7675); }

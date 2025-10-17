@@ -1,44 +1,43 @@
+<!-- views/partials/_header.ejs -->
 <header class="site-header">
-  <div class="header-wrap">
-    <!-- Logo / Nom du site -->
-    <a class="brand" href="/">📰 Blog Interactif</a>
+  <div class="wrap">
+    <!-- Marque -->
+    <a class="brand" href="/" aria-label="Accueil Blog Interactif">
+      <span class="brand-emoji" aria-hidden="true">📰</span>
+      <span class="brand-text">Blog Interactif</span>
+    </a>
 
     <!-- Navigation principale -->
-    <nav class="main-nav">
-      <a href="/" class="<%= pageTitle === 'Accueil' ? 'active' : '' %>">Accueil</a>
-      <a href="/articles" class="<%= pageTitle === 'Articles' ? 'active' : '' %>">Articles</a>
-      <a href="/categories" class="<%= pageTitle === 'Catégories' ? 'active' : '' %>">Catégories</a>
-      <a href="/tags" class="<%= pageTitle === 'Tags' ? 'active' : '' %>">Tags</a>
-      <a href="/contact" class="<%= pageTitle === 'Contact' ? 'active' : '' %>">Contact</a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="/" class="<%= (pageTitle === 'Accueil') ? 'active' : '' %>">Accueil</a>
+      <a href="/articles" class="<%= (pageTitle === 'Articles') ? 'active' : '' %>">Articles</a>
+      <!-- Si tu veux des pages Catégories/Tags côté EJS, ajoute leurs routes front plus tard -->
+      <!-- <a href="/categories" class="<%= (pageTitle === 'Catégories') ? 'active' : '' %>">Catégories</a> -->
+      <!-- <a href="/tags" class="<%= (pageTitle === 'Tags') ? 'active' : '' %>">Tags</a> -->
+      <!-- Liens API (nouvel onglet) -->
+      <a href="/api/categories" target="_blank" rel="noopener">Catégories (API)</a>
+      <a href="/api/tags" target="_blank" rel="noopener">Tags (API)</a>
     </nav>
 
-    <!-- Barre de recherche -->
-    <form id="searchForm" class="search-bar" action="/articles" method="get">
+    <!-- Recherche -->
+    <form class="search" action="/articles" method="get" role="search">
       <input
         type="text"
         name="q"
-        placeholder="Rechercher un article..."
+        placeholder="Rechercher un article…"
         value="<%= typeof query !== 'undefined' ? query : '' %>"
         aria-label="Rechercher un article"
       />
-      <button type="submit" title="Rechercher">
-        <i class="fas fa-search"></i>
-      </button>
+      <button type="submit" aria-label="Lancer la recherche">Chercher</button>
     </form>
 
-    <!-- Menu de droite (Admin / Profil) -->
-    <nav class="user-nav">
-      <% if (typeof user !== 'undefined' && user.role === 'admin') { %>
-        <a href="/admin/dashboard" class="btn-admin">
-          <i class="fas fa-cogs"></i> Tableau de bord
-        </a>
-        <a href="/logout" class="btn-logout">
-          <i class="fas fa-sign-out-alt"></i> Déconnexion
-        </a>
+    <!-- Espace utilisateur / Admin (optionnel) -->
+    <nav class="nav user" aria-label="Espace utilisateur">
+      <% if (typeof user !== 'undefined' && user?.role === 'admin') { %>
+        <a href="/admin/dashboard" class="btn ghost">Admin</a>
+        <a href="/logout" class="btn ghost">Déconnexion</a>
       <% } else { %>
-        <a href="/login" class="btn-login">
-          <i class="fas fa-user"></i> Connexion
-        </a>
+        <a href="/login" class="btn ghost">Connexion</a>
       <% } %>
     </nav>
   </div>

@@ -1,20 +1,135 @@
-<% layout('layouts/main') %>
-<article class="card">
-  <h1><%= article.title %></h1>
-  <div class="meta"><%= new Date(article.created_at).toLocaleString() %></div>
-  <div class="content"><%- article.content.replace(/\n/g,'<br>') %></div>
-</article>
+<% if (!article) { %>
+  <section class="empty">
+    <h1>Article introuvable</h1>
+    <a class="btn" href="/">Revenir à l’accueil</a>
+  </section>
+<% } else { %>
 
-<section class="card">
-  <h2>Commentaires</h2>
-  <% if (!comments.length) { %>
-    <p>Aucun commentaire pour l’instant.</p>
-  <% } %>
-  <% comments.forEach(c => { %>
-    <div class="comment">
-      <strong><%= c.author || 'Anonyme' %></strong>
-      <div class="meta"><%= new Date(c.created_at).toLocaleString() %></div>
-      <div><%= c.content %></div>
+  <!-- HERO / en-tête de l’article -->
+  <article class="article">
+    <header class="article-header">
+      <div class="article-kicker">Lecture</div>
+      <h1 class="article-title"><%= article.title %></h1>
+
+      <p class="article-meta">
+        Publié le <strong><%= new Date(article.created_at).toLocaleDateString('fr-CA') %></strong>
+        <% if (article.categories) { %>
+          • <span class="chip">Catégories : <%= article.categories %></span>
+        <% } %>
+        <% if (article.tags) { %>
+          • <span class="chip">Tags : <%= article.tags %></span>
+        <% } %>
+      </p>
+
+      <div class="article-stats">
+        <span class="bubble">💬 <%= article.comments_count || 0 %></span>
+        <span class="bubble">👀 <%= article.views || 0 %></span>
+      </div>
+    </header>
+
+    <!-- Contenu -->
+    <div class="article-content">
+      <%- (article.content || '').replace(/\n/g,'<br>') %>
     </div>
-  <% }) %>
-</section>
+
+    <!-- CTA retour / navigation -->
+    <footer class="article-footer">
+      <a class="btn ghost" href="/articles">← Retour aux articles</a>
+      <a class="btn" href="#comments">Commenter</a>
+    </footer>
+  </article>
+
+  <!-- COMMENTAIRES -->
+  <section id="comments" class="comments">
+    <h2 class="section-title">Commentaires</h2>
+
+    <% if (!comments || !comments.length) { %>
+      <p class="muted">Soyez le premier à laisser un commentaire ✍️</p>
+    <% } else { %>
+      <ul class="comment-list">
+        <% comments.forEach(c => { %>
+          <li class="comment">
+            <div class="avatar" aria-hidden="true"><%= (c.author || '🙂').slice(0,1).toUpperCase() %></div>
+            <div class="comment-body">
+              <div class="comment-head">
+                <strong class="author"><%= c.author || 'Anonyme' %></strong>
+                <time class="date"><%= new Date(c.created_at).toLocaleString('fr-CA') %></time>
+              </div>
+              <p class="comment-text"><%= c.content %></p>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <!-- FORMULAIRE DE COMMENTAIRE -->
+    <form id="commentForm" class="comment-form" autocomplete="off" novalidate>
+      <div class="row">
+        <label class="sr-only" for="author">Votre nom</label>
+        <input id="author" name="author" type="text" placeholder="Votre nom" minlength="2" maxlength="80" required />
+      </div>
+
+      <div class="row">
+        <label class="sr-only" for="content">Votre commentaire</label>
+        <textarea id="content" name="content" rows="4" placeholder="Votre commentaire…" minlength="2" maxlength="2000" required></textarea>
+      </div>
+
+      <!-- Honeypot anti-bot -->
+      <input type="text" name="hp" class="hp" tabindex="-1" autocomplete="off" />
+
+      <div class="actions">
+        <button type="submit" class="btn">Publier</button>
+        <button type="reset" class="btn ghost">Effacer</button>
+      </div>
+
+      <p id="commentHint" class="form-hint muted" aria-live="polite"></p>
+    </form>
+
+    <script>
+      (function () {
+        const form = document.getElementById('commentForm');
+        const hint = document.getElementById('commentHint');
+
+        function setHint(msg, ok=false) {
+          hint.textContent = msg || '';
+          hint.style.color = ok ? 'var(--brand-2)' : 'var(--muted)';
+        }
+
+        form?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          setHint('Publication en cours…');
+
+          const data = {
+            author: form.author.value.trim(),
+            content: form.content.value.trim(),
+            hp: form.hp.value.trim()
+          };
+
+          if (data.author.length < 2 || data.content.length < 2) {
+            setHint('Merci de respecter les longueurs minimales (nom ≥ 2, commentaire ≥ 2).');
+            return;
+          }
+
+          try {
+            const res = await fetch('/api/articles/<%= article.id %>/comments', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+
+            if (!res.ok) {
+              const j = await res.json().catch(() => ({}));
+              throw new Error(j.error || 'Erreur lors de la publication du commentaire.');
+            }
+
+            setHint('Commentaire publié ! Actualisation…', true);
+            setTimeout(() => location.reload(), 500);
+          } catch (err) {
+            setHint(err.message || 'Une erreur est survenue.');
+          }
+        });
+      })();
+    </script>
+  </section>
+
+<% } %>

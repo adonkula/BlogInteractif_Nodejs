@@ -1,17 +1,57 @@
-<% layout('layouts/main') %>
-<section class="card">
-  <h1>Articles</h1>
-  <div class="list">
-    <% if (!items.length) { %>
-      <p>Aucun article.</p>
-    <% } %>
-    <% items.forEach(it => { %>
-      <a class="list-item" href="/article/<%= it.id %>">
-        <strong><%= it.title %></strong>
-        <div class="meta">
-          publié <%= new Date(it.created_at).toLocaleString() %> • <%= it.comments_count %> commentaires
-        </div>
-      </a>
-    <% }) %>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenue sur le <span>Blog Interactif</span></h1>
+    <p class="lead">
+      Découvrez, commentez et partagez des articles inspirants rédigés par notre communauté ✨
+    </p>
+
+    <form class="hero-search" action="/articles" method="get">
+      <input
+        type="text"
+        name="q"
+        placeholder="Rechercher un article, un mot-clé ou une catégorie…"
+        aria-label="Rechercher un article"
+        value="<%= typeof query !== 'undefined' ? query : '' %>"
+      />
+      <button type="submit">🔍</button>
+    </form>
+  </div>
+</section>
+
+<section class="articles-preview">
+  <h2 class="section-title">📰 Derniers articles</h2>
+
+  <% if (!items || !items.length) { %>
+    <p class="muted">Aucun article publié pour le moment.</p>
+  <% } else { %>
+    <div class="grid">
+      <% items.forEach(a => { %>
+        <article class="card article-card">
+          <a href="/articles/page/<%= a.id %>" class="card-link">
+            <header class="card-header">
+              <h3 class="card-title"><%= a.title %></h3>
+              <p class="card-meta">
+                Publié le <%= new Date(a.created_at).toLocaleDateString('fr-CA') %>
+              </p>
+            </header>
+
+            <div class="card-body">
+              <p><%= (a.content || '').replace(/\n/g,' ').slice(0, 150) %>…</p>
+            </div>
+
+            <footer class="card-footer">
+              <% if (a.categories) { %><span class="chip"><%= a.categories %></span><% } %>
+              <% if (a.tags) { %><span class="chip chip-tag"><%= a.tags %></span><% } %>
+              <span class="bubble">💬 <%= a.comments_count || 0 %></span>
+              <span class="bubble">👀 <%= a.views || 0 %></span>
+            </footer>
+          </a>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <div class="more">
+    <a href="/articles" class="btn">Voir tous les articles</a>
   </div>
 </section>

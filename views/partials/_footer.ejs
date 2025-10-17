@@ -1,20 +1,12 @@
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-wrap">
-    <small class="footer-line">
-      © <%= new Date().getFullYear() %> — Blog Interactif
-    </small>
-
-    <small class="footer-line">
-      Tous droits réservés •
-      <span class="footer-sep">|</span>
-      Réalisé par
-      <strong><%= typeof authorName !== 'undefined' ? authorName : 'Adolph Nkula' %></strong>
-      <span class="footer-sep">|</span>
-      No. étudiant :
-      <strong><%= typeof studentId !== 'undefined' ? studentId : 'XXXXXXXXX' %></strong>
-      <span class="footer-sep">|</span>
-      Collège :
-      <strong><%= typeof collegeName !== 'undefined' ? collegeName : 'La Cité' %></strong>
+<!-- views/partials/_footer.ejs -->
+<footer class="site-footer">
+  <div class="wrap">
+    <small>
+      © <%= new Date().getFullYear() %> — Blog Interactif.
+      <span class="sep">•</span> Copy right
+      <strong><%= locals.authorName || 'Auteur' %></strong>
+      <span class="sep">•</span> # Étudiant : <%= locals.studentId || '—' %>
+      <span class="sep">•</span> Collège : <%= locals.collegeName || '—' %>
     </small>
   </div>
 </footer>
